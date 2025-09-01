@@ -1,6 +1,13 @@
 FROM openjdk:17-jdk-slim
 WORKDIR /app
+
+# Kopiraj sve fajlove u kontejner
 COPY . /app
-RUN javac WebServer.java ExpenseTracker.java
+
+# Kompajliraj sve .java fajlove sa classpath-om
+RUN find src -name "*.java" > sources.txt && javac -cp "lib/*" @sources.txt
+
+# Pokreni aplikaciju sa classpath-om
+CMD ["java", "-cp", "lib/*:src", "WebServer"]
+
 EXPOSE 8080
-CMD ["java", "WebServer"]

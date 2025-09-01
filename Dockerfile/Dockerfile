@@ -1,11 +1,11 @@
-FROM openjdk:17
+FROM openjdk:17-jdk-slim
+
 WORKDIR /app
 
-# Kopiraj sve fajlove u kontejner
 COPY . /app
 
-# Kompajliraj Java fajlove
-RUN javac src/*.java
+RUN ./gradlew build || ./mvnw package
 
-# Pokreni aplikaciju
-CMD ["java", "src.WebServer"]
+EXPOSE 8080
+
+CMD ["java", "-jar", "build/libs/your-app-name.jar"]

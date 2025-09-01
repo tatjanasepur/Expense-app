@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8" />
+  <title>T·Solutions — Expense Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./styles.css" />
+
+  <!-- Libs (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+</head>
+<body>
+  <!-- Hero gradient -->
+  <div class="hero"></div>
+
+  <header class="nav glass">
+    <div class="brand">
+      <!-- Ako se tvoja slika zove logo1.png, promeni src ispod -->
+      <img src="./logo.png" class="logo" alt="T·Solutions" />
+      <div class="brand-text">
+        <div class="brand-title">T·Solutions</div>
+        <div class="brand-sub">EXPENSE & SUBSCRIPTION TRACKER</div>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <button id="themeToggle" title="Promeni temu">🌙/☀️</button>
+  </header>
+
+  <main class="container">
+    <section class="card glass">
+      <h2>Dodaj trošak</h2>
+      <form id="expenseForm" autocomplete="off">
+        <div class="grid">
+          <label> Naziv
+            <input required name="name" placeholder="npr. Maxima / MOL / Netflix" />
+          </label>
+
+          <label> Kategorija
+            <select name="category" id="category">
+              <option>FOOD</option>
+              <option>DAIRY</option>
+              <option>DELIKATES</option>
+              <option>HYGIENE</option>
+              <option>PHARMACY</option>
+              <option>ENTERTAINMENT</option>
+              <option>BILLS</option>
+              <option>TRANSPORT</option>
+              <option>FUEL</option>
+              <option>PARKING</option>
+              <option>SHOPPING</option>
+              <option>PETS</option>
+              <option>EDUCATION</option>
+              <option>HEALTH</option>
+              <option>OTHER</option>
+            </select>
+          </label>
+
+          <label> Iznos (€)
+            <input required name="amount" type="number" step="0.01" inputmode="decimal" />
+          </label>
+
+          <label> Datum
+            <input name="date" type="datetime-local" />
+          </label>
+        </div>
+
+        <div class="row">
+          <button id="saveBtn" type="submit">Sačuvaj</button>
+
+          <label class="upload">📷 Učitaj račun (OCR)
+            <input id="receiptInput" type="file" accept="image/*" capture="environment" hidden />
+          </label>
+
+          <button id="qrBtn" type="button">🔍 QR skeniranje</button>
+          <span id="ocrHint"></span>
+        </div>
+      </form>
+    </section>
+
+    <section class="card glass">
+      <h2>Pregled & Statistika</h2>
+      <canvas id="pie" height="140"></canvas>
+    </section>
+
+    <section class="card glass">
+      <h2>Svi troškovi</h2>
+      <input id="search" placeholder="Pretraga po nazivu/kategoriji…" />
+      <table id="table">
+        <thead>
+          <tr>
+            <th>ID</th><th>Naziv</th><th>Kategorija</th><th>Iznos</th><th>Datum</th><th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div id="empty" class="empty">Nema troškova još 🙂</div>
+    </section>
+  </main>
+
+  <!-- QR modal -->
+  <div id="qrModal" class="cam-modal" style="display:none;">
+    <div class="cam-box glass">
+      <video id="qrVideo" autoplay playsinline></video>
+      <div class="cam-actions">
+        <button id="closeQR" type="button">Zatvori</button>
+      </div>
+      <canvas id="qrCanvas" style="display:none;"></canvas>
+    </div>
+  </div>
+
+  <footer>© T·Solutions</footer>
+  <script src="./app.js"></script>
+</body>
+</html>
